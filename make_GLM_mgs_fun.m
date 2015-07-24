@@ -1,4 +1,8 @@
-function [results]=make_GLM_mgs_fun(cell_no,monkey,area,operation_mode,z_score_data,cross_time_comparisons)
+function [results]=make_GLM_mgs_fun(cell_no,monkey,area,operation_mode,z_score_data,cross_time_comparisons,noise_model)
+
+if nargin<7
+    noise_model='normal';
+end
 
 %Inputs: cell_no: cell number in data base
 %         monkey: monkey name
@@ -122,19 +126,19 @@ for mat_used=1:num_matrices
         y(:,i)=nanmean(grand_psth.matrix{mat_used}(:,abs(t-tbins_center(i))<=tbins_semi_width),2);
     end
 
-     y=(y-mean_center)/std_scale;
 
-    [temp]= make_GLM_and_contrasts_from_inst_firing_mgs(y,RF_surf(cell_no),[mgs_str.tphi]');
+    [temp]= make_GLM_and_contrasts_from_inst_firing_mgs(y,RF_surf(cell_no),[mgs_str.tphi]',noise_model,mean_center,std_scale);
     switch operation_mode
         case 'fixed_points'
             if cross_time_comparisons & mat_used==2
-                cross_time_results=make_cross_time_GLM_mgs(y,RF_surf(cell_no),[mgs_str.tphi]');
+                cross_time_results=make_cross_time_GLM_mgs(y,RF_surf(cell_no),[mgs_str.tphi]',noise_model,mean_center,std_scale);
                 temp=[temp cross_time_results];
             end
     end
     
     results{mat_used}=temp; clear temp;
     results{mat_used}(1).time=tbins_center;
+    y=(y-mean_center)/std_scale;
     results{mat_used}(1).y=y;
 end
 %% Make plots

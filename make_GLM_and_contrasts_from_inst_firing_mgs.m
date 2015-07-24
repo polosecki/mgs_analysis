@@ -28,11 +28,11 @@ X1=double([ones(size(y,1),1) phys_targ/2]);
 
 contrast.name={'Target (main)';};
 % crazy_mat1=inv(X1'*X1);
- results.GLM(1).ces_std=zeros(length(contrast.matrix),size(y,2));
- results.GLM(1).t=zeros(length(contrast.matrix),size(y,2));
- results.GLM(1).Fsig=zeros(length(contrast.matrix),size(y,2));
- results.GLM(1).ces=zeros(length(contrast.matrix),size(y,2));
- results.GLM(1).dof=zeros(length(contrast.matrix),size(y,2));
+ results.GLM(1).ces_std=zeros(size(X1,2),size(y,2));
+ results.GLM(1).t=zeros(size(X1,2),size(y,2));
+ results.GLM(1).Fsig=zeros(size(X1,2),size(y,2));
+ results.GLM(1).ces=zeros(size(X1,2),size(y,2));
+ results.GLM(1).dof=zeros(size(X1,2),size(y,2));
  rx=rank(X1);
  for i=1:size(y,2)
      disp(['GLM(1) ' num2str(i)])
@@ -44,11 +44,11 @@ contrast.name={'Target (main)';};
 
          
         [b,dev,stats] = glmfit(X1(tt,:),temp_y(tt),noise_type,'link','identity','constant','off','estdisp','off');
-        results.GLM(used_mat).ces_std(:,i)=stats.se/std_scale;
-        results.GLM(used_mat).t(:,i)=stats.t;
-        results.GLM(used_mat).Fsig(:,i)=stats.p;
-        results.GLM(used_mat).ces(:,i)=stats.beta/std_scale;
-        results.GLM(used_mat).dof(:,i)=stats.dfe;
+        results.GLM(1).ces_std(:,i)=stats.se/std_scale;
+        results.GLM(1).t(:,i)=stats.t;
+        results.GLM(1).Fsig(:,i)=stats.p;
+        results.GLM(1).ces(:,i)=stats.beta/std_scale;
+        results.GLM(1).dof(:,i)=stats.dfe;
 
      
  end

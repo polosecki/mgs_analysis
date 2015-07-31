@@ -34,7 +34,7 @@ contrast.name={'Target (main)';};
  results.GLM(1).ces=zeros(size(X1,2),size(y,2));
  results.GLM(1).dof=zeros(size(X1,2),size(y,2));
  rx=rank(X1);
- estpdisp='true';
+ estdisp=true;
  for i=1:size(y,2)
      disp(['GLM(1) ' num2str(i)])
      temp_y=y(:,i);
@@ -43,7 +43,7 @@ contrast.name={'Target (main)';};
          continue
      end
          
-        [b,dev,stats] = glmfit(X1(tt,:),temp_y(tt),noise_type,'link','identity','constant','off','estdisp',estpdisp);
+        [b,dev,stats] = glmfit(X1(tt,:),temp_y(tt),noise_type,'link','identity','constant','off','estdisp',estdisp);
         results.GLM(1).ces_std(:,i)=stats.se/std_scale;
         results.GLM(1).t(:,i)=stats.t;
         results.GLM(1).Fsig(:,i)=stats.p;

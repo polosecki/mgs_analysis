@@ -1,3 +1,1 @@
--GLM changed to poisson noise
--make_GLM_and_contrasts_from_inst_firing.m icporporates estdisp paramteter that estimates the dispersion for poisson noise.
--GLM units corrected (now they look huge though)
+-correctected bug in make_GLM_and_contrasts_from_inst_firing.m  estdisp paramteter
